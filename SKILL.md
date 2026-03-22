@@ -1,7 +1,7 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持智能内容提取和三层 HTML 抓取策略
-version: 1.2.0
+description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和头条平台专项优化
+version: 1.3.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
@@ -15,6 +15,8 @@ tags:
   - converter
   - extractor
   - web-scraping
+  - toutiao
+  - 头条
 repository: https://github.com/sipingme/news-to-markdown-skill
 files:
   - bin/convert-url       # CLI 入口
@@ -450,5 +452,12 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 
 ---
 
-**版本**: 1.2.0  
+**版本**: 1.3.0  
 **最后更新**: 2026-03-22
+
+## 🐛 v1.3.0 更新 (2026-03-22)
+
+- ✅ 头条标题层级规范化：pgc-h-* class → 标准 h1/h2/h3
+- ✅ 头条 ● 列表符号自动转 Markdown 列表
+- ✅ 头条代码块 3+ 空格行分隔符 → 标准换行
+- ✅ 头条表格包装器增强：支持 tableWrapper / pgc-table / table-outer
