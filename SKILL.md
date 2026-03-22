@@ -1,7 +1,7 @@
 ---
 name: news-to-markdown
 description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和头条平台专项优化
-version: 1.4.0
+version: 1.5.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
@@ -455,7 +455,7 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 **版本**: 1.3.2  
 **最后更新**: 2026-03-22
 
-## 🐛 v1.4.0 更新 (2026-03-22)
+## 🐛 v1.5.0 更新 (2026-03-22)
 
 - ✅ 新增 extractInlineText 函数：保留 **加粗** 和 *斜体* 行内格式
 - ✅ 修复编号列表：识别 `<p>` 中的 `1. 2.` 文本模式，转为标准 Markdown 编号列表

@@ -135,7 +135,7 @@ function extractCellText($, cellEl) {
       const href = $(node).attr('href') || '';
       const linkText = $(node).text().trim();
       if (href && linkText) {
-        text += `[${linkText}](${href})`;
+        text += '[' + linkText + '](' + href + ')';
       } else if (linkText) {
         text += linkText;
       }
@@ -143,11 +143,20 @@ function extractCellText($, cellEl) {
       const src = $(node).attr('src') || $(node).attr('data-src') || '';
       const alt = $(node).attr('alt') || '';
       if (src && !src.startsWith('data:')) {
-        text += `![${alt}](${src})`;
+        text += '![' + alt + '](' + src + ')';
       }
     } else if (node.name === 'br') {
       text += '\n';
-    } else if (['strong', 'b', 'em', 'i', 'code', 'span'].includes(node.name)) {
+    } else if (node.name === 'strong' || node.name === 'b') {
+      const inner = extractCellText($, node);
+      if (inner) text += '**' + inner + '**';
+    } else if (node.name === 'em' || node.name === 'i') {
+      const inner = extractCellText($, node);
+      if (inner) text += '*' + inner + '*';
+    } else if (node.name === 'code') {
+      const inner = extractCellText($, node);
+      if (inner) text += '`' + inner + '`';
+    } else if (['span', 'p', 'div'].includes(node.name)) {
       text += extractCellText($, node);
     }
   });
