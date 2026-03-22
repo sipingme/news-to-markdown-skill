@@ -157,6 +157,49 @@ function extractCellText($, cellEl) {
   return text;
 }
 
+/**
+ * 提取行内格式文本（保留 **bold**, *italic*, `code`, [link](url) 等）
+ * 用于 <p>、<li> 等容器标签，保留行内 HTML 的 Markdown 格式
+ */
+function extractInlineText($, el) {
+  let text = '';
+  $(el).contents().each((i, node) => {
+    if (node.type === 'text') {
+      text += node.data;
+    } else if (node.name === 'strong' || node.name === 'b') {
+      const inner = extractInlineText($, node);
+      if (inner) text += '**' + inner + '**';
+    } else if (node.name === 'em' || node.name === 'i') {
+      const inner = extractInlineText($, node);
+      if (inner) text += '*' + inner + '*';
+    } else if (node.name === 'code') {
+      const inner = extractInlineText($, node);
+      if (inner) text += '`' + inner + '`';
+    } else if (node.name === 'a') {
+      const href = $(node).attr('href') || '';
+      const linkText = extractInlineText($, node);
+      if (href && linkText) {
+        text += '[' + linkText + '](' + href + ')';
+      } else if (linkText) {
+        text += linkText;
+      }
+    } else if (node.name === 'img') {
+      const src = $(node).attr('src') || $(node).attr('data-src') || '';
+      const alt = $(node).attr('alt') || '';
+      if (src && !src.startsWith('data:')) {
+        text += '![' + alt + '](' + src + ')';
+      }
+    } else if (node.name === 'br') {
+      text += '\n';
+    } else if (node.name === 'span' || node.name === 'p' || node.name === 'div') {
+      text += extractInlineText($, node);
+    } else {
+      text += extractInlineText($, node);
+    }
+  });
+  return text;
+}
+
 function htmlToMarkdownSimple(html) {
   const $ = load(html);
 
@@ -199,22 +242,27 @@ function htmlToMarkdownSimple(html) {
       const text = $(el).text().trim();
       if (text) parts.push(`##### ${text}\n\n`);
     } else if (tag === 'p') {
-      const inner = getInner(el);
-      const text = $(el).text().trim();
+      let text = extractInlineText($, el).trim().replace(/\\n/g, ' ');
       if (!text) return;
-      // 如果 inner 包含 <br>，需要保留换行
-      const textWithBreaks = inner.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '');
-      const cleanText = textWithBreaks.trim();
-      if (cleanText) parts.push(cleanText + '\n\n');
+      // 识别编号列表项：1. 2. 3. 开头
+      const numberedMatch = text.match(/^(\d+)\.\s+(.*)/);
+      if (numberedMatch) {
+        parts.push(numberedMatch[1] + '. ' + numberedMatch[2] + '\n');
+        return;
+      }
+      // 过滤噪音类
+      if (!cls.includes('syl-page-br')) {
+        parts.push(text + '\n\n');
+      }
     } else if (tag === 'ul') {
       $(el).find('> li').each((i, li) => {
-        const text = $(li).text().trim();
+        const text = extractInlineText($, li).trim().replace(/\n/g, ' ');
         if (text) parts.push(`- ${text}\n`);
       });
       parts.push('\n');
     } else if (tag === 'ol') {
       $(el).find('> li').each((i, li) => {
-        const text = $(li).text().trim();
+        const text = extractInlineText($, li).trim().replace(/\n/g, ' ');
         if (text) parts.push(`${i + 1}. ${text}\n`);
       });
       parts.push('\n');
