@@ -11,20 +11,34 @@ import { convertString as html2mdConvert } from '@siping/html-to-markdown-node';
 export async function htmlToMarkdown(html, options = {}) {
   const { domain, verbose = false } = options;
 
-  // 优先用 html-to-markdown-node（已安装）
+  // 检测平台：头条、微信等有特殊 HTML 结构，跳过 html2mdConvert
+  const isSpecialPlatform = domain && (
+    domain.includes('toutiao') ||
+    domain.includes('163.com') ||
+    domain.includes('weixin') ||
+    domain.includes('qq.com')
+  );
+
+  // 优先用手写转换逻辑（支持头条平台特性）
+  if (verbose) console.error('[Convert] 使用手写转换逻辑');
+  const simpleMd = htmlToMarkdownSimple(html);
+  if (simpleMd && simpleMd.length > 100) {
+    if (verbose) console.error('[Convert] 手写逻辑成功 (' + simpleMd.length + ' chars)');
+    return simpleMd;
+  }
+
+  // 备用：html-to-markdown-node（普通网站）
   try {
     const md = html2mdConvert(html, { domain });
     if (md && md.length > 50) {
-      if (verbose) console.error('[Convert] 使用 @siping/html-to-markdown-node');
+      if (verbose) console.error('[Convert] html-to-markdown-node 成功');
       return md;
     }
   } catch (e) {
-    if (verbose) console.error(`[Convert] html-to-markdown-node 失败: ${e.message}`);
+    if (verbose) console.error('[Convert] html-to-markdown-node 失败: ' + e.message);
   }
 
-  // 备用：手写转换逻辑
-  if (verbose) console.error('[Convert] 使用手写转换逻辑');
-  return htmlToMarkdownSimple(html);
+  return simpleMd || '';
 }
 
 /**

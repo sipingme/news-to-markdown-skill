@@ -47,7 +47,7 @@ function isTouTiao(hostname) {
  * 1. 提取 <article> 区域（过滤页头页脚等噪音）
  * 2. 规范化标题：pgc-h-* class → 标准 h1/h2/h3
  * 3. 规范化图片：div.pgc-img > img → 直接 img[data-src]
- * 4. 规范化表格：div.tableWrapper > table → 直接 table
+ * 4. 规范化表格：div.tableWrapper, div.syl-table-wrap > table → 直接 table
  * 5. 规范化列表：● 符号 → 标准 - 列表项
  * 6. 规范化代码块：3+ 空格行分隔符 → 标准换行
  * 7. 移除嵌套过深的噪音容器
@@ -220,6 +220,18 @@ function normalizeTouTiaoCodeBlocks($, $root) {
  * 处理各种头条表格包装结构
  */
 function normalizeTouTiaoTables($, $root) {
+  // 两层包装：div.tableWrapper > div.syl-table-wrap > table
+  // 先处理内层 syl-table-wrap
+  $root.find('div.syl-table-wrap').each((i, inner) => {
+    const $inner = $(inner);
+    const $table = $inner.find('> table').first();
+    if ($table.length) {
+      $inner.replaceWith($table);
+    } else {
+      $inner.remove();
+    }
+  });
+  // 再处理外层 tableWrapper / pgc-table 等
   $root.find('div.tableWrapper, div.pgc-table, div.table-outer').each((i, wrapper) => {
     const $wrapper = $(wrapper);
     const $table = $wrapper.find('> table').first();
