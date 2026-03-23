@@ -1,24 +1,11 @@
 {
   "name": "news-to-markdown-skill",
   "version": "2.0.0",
-  "description": "ClawHub skill for converting news to markdown (powered by @siping/news-to-markdown)",
   "bin": {
     "convert-url": "./bin/convert-url"
   },
-  "scripts": {
-    "test": "node scripts/test.js"
-  },
-  "keywords": [
-    "news",
-    "markdown",
-    "converter",
-    "clawhub",
-    "skill"
-  ],
-  "author": "Ping Si <sipingme@gmail.com>",
-  "license": "MIT",
   "dependencies": {
-    "news-to-markdown": "file:../news-to-markdown"
+    "news-to-markdown": "^1.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
