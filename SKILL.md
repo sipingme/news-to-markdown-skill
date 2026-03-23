@@ -31,17 +31,19 @@ files:
 
 ### 核心特点
 
-1. **智能内容提取**：基于文本密度算法，自动识别新闻正文
-2. **三层抓取策略**：curl → wget → Playwright，确保高成功率是[@siping/news-to-m](https://github.com/sipingme/news-to-markdown)核心库的轻量级 CLI 包装，提供简洁的命令行接口
-3. **自动元数据提取**：标题、作者、发布时间
-4. **噪音过滤**：自动去除广告、评论等无关内容
-5. **高质量输出**：保留文章结构，正确处理链接和图片
- `news-extractor-node` 的
+1. **智能内容提取**：基于 `news-extractor-node` 的文本密度算法
+2. **三层抓取策略**：curl → wget → Playwright，确保高成功率
+3. **多平台支持**：头条、微信、小红书等平台专项优化
+4. **自动元数据提取**：标题、作者、发布时间
+5. **高质量输出**：基于 `html-to-markdown-node` 的转换引擎
+6. **可扩展架构**：支持自定义平台适配器
+
+这是 [news-to-markdown](https://github.com/sipingme/news-to-markdown) 核心库的轻量级 CLI 包装。
+
 ## 🎯 使用场景
-. **多平台支持**：头条、微信、小红书等平台专项优化
-4
-5## 场高质量输出快速保基于 `@siping/html-to-markdown-node` 的转换引擎
-6可扩展架构支持自定义平台适配器
+
+### 场景 1：快速保存新闻文章
+
 **用户意图**：
 - "帮我保存这篇新闻"
 - "把这个链接的文章转成 Markdown"
