@@ -18,7 +18,7 @@
   "author": "Ping Si <sipingme@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@siping/news-to-markdown": "file:../news-to-markdown"
+    "news-to-markdown": "file:../news-to-markdown"
   },
   "engines": {
     "node": ">=18.0.0"

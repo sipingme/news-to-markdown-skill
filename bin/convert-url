@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { NewsToMarkdownConverter } = require('@siping/news-to-markdown');
+const { NewsToMarkdownConverter } = require('news-to-markdown');
 const { parseArgs } = require('node:util');
 const { writeFileSync, readFileSync } = require('node:fs');
 const { resolve } = require('node:path');
