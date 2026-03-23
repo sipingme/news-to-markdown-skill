@@ -1,33 +1,19 @@
 #!/usr/bin/env node
-/**
- * convert-url — 新闻文章转 Markdown CLI
- * 
- * 三层抓取策略：
- *   1. curl — 最快，用于静态页面
- *   2. wget — 备选，兼容性更好
- *   3. Playwright — 支持 JavaScript 动态渲染
- */
 
-import { fileURLToPath, URL } from 'node:url';
-import { parseArgs } from 'node:util';
-import { resolve } from 'node:path';
-import { readFileSync } from 'node:fs';
-import { extractFromUrl } from '../src/extract.js';
+const { NewsToMarkdownConverter } = require('@siping/news-to-markdown');
+const { parseArgs } = require('node:util');
+const { writeFileSync, readFileSync } = require('node:fs');
+const { resolve } = require('node:path');
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const pkg = JSON.parse(readFileSync(resolve(__dirname, '../package.json'), 'utf-8'));
 
-// 读取 package.json 获取版本
-const pkg = JSON.parse(
-  readFileSync(resolve(__dirname, '../package.json'), 'utf-8')
-);
-
-// 解析命令行参数
 const { values, positionals } = parseArgs({
   options: {
     url: { type: 'string', short: 'u' },
     output: { type: 'string', short: 'o' },
     selector: { type: 'string', short: 's' },
     noise: { type: 'string', short: 'n' },
+    platform: { type: 'string', short: 'p' },
     'no-metadata': { type: 'boolean', default: false },
     verbose: { type: 'boolean', short: 'v', default: false },
     help: { type: 'boolean', short: 'h', default: false },
@@ -38,21 +24,22 @@ const { values, positionals } = parseArgs({
 const ARTICLE_URL = values.url || positionals[0];
 const OUTPUT = values.output;
 const SELECTOR = values.selector;
-const NOISE_SELECTORS = values.noise ? values.noise.split(',').map(s => s.trim()) : ['.ad', '.ads', '.advertisement', '.sidebar', '.comments', '.comment', '.related', '.share', '.footer', '.header-nav'];
+const PLATFORM = values.platform;
+const NOISE_SELECTORS = values.noise ? values.noise.split(',').map(s => s.trim()) : undefined;
 const NO_METADATA = values['no-metadata'];
 const VERBOSE = values.verbose;
 
-// 打印帮助
 if (values.help) {
   console.log(`
-news-to-markdown v${pkg.version}
-新闻文章转 Markdown CLI
+news-to-markdown-skill v${pkg.version}
+ClawHub skill for converting news to markdown
 
 用法: convert-url --url <URL> [选项]
 
 选项:
   --url, -u <URL>        新闻文章的 URL（必需）
   --output, -o <文件>    输出 Markdown 文件路径（默认: stdout）
+  --platform, -p <平台>  指定平台 (toutiao, wechat, xiaohongshu)
   --selector, -s <选择器> CSS 选择器，指定内容区域
   --noise, -n <选择器>   要移除的元素（逗号分隔）
   --no-metadata          不包含元数据（标题、作者、时间）
@@ -60,9 +47,9 @@ news-to-markdown v${pkg.version}
   --help, -h             显示帮助信息
 
 示例:
-  convert-url --url "https://example.com/news/article" --output article.md
-  convert-url "https://example.com/article" --no-metadata
-  convert-url --url "https://news.example.com/123" --selector "article.content"
+  convert-url --url "https://www.toutiao.com/article/123" --output article.md
+  convert-url "https://mp.weixin.qq.com/s/xxx" --platform wechat
+  convert-url --url "https://example.com/news" --no-metadata --verbose
 `);
   process.exit(0);
 }
@@ -76,14 +63,15 @@ if (!ARTICLE_URL) {
 async function main() {
   const startTime = Date.now();
 
-  if (VERBOSE) {
-    console.error(`[INFO] 开始处理: ${ARTICLE_URL}`);
-  }
-
   try {
-    const result = await extractFromUrl(ARTICLE_URL, {
+    const converter = new NewsToMarkdownConverter();
+    
+    const result = await converter.convert({
+      url: ARTICLE_URL,
+      platform: PLATFORM,
       selector: SELECTOR,
       noiseSelectors: NOISE_SELECTORS,
+      includeMetadata: !NO_METADATA,
       verbose: VERBOSE,
     });
 
@@ -91,63 +79,32 @@ async function main() {
 
     if (VERBOSE) {
       console.error(`[INFO] 提取成功 (${elapsed}s)`);
-      console.error(`[INFO] 抓取方式: ${result.method}`);
-      console.error(`[INFO] 标题: ${result.metadata.title}`);
+      console.error(`[INFO] 平台: ${result.metadata.platform}`);
+      console.error(`[INFO] 抓取方式: ${result.metadata.fetchMethod}`);
+      console.error(`[INFO] 标题: ${result.metadata.title || '未知'}`);
       console.error(`[INFO] 作者: ${result.metadata.author || '未知'}`);
       console.error(`[INFO] 发布时间: ${result.metadata.publishTime || '未知'}`);
-      console.error(`[INFO] 正文长度: ${result.contentLength} 字符`);
-      console.error(`[INFO] 图片数量: ${result.images.length} 张`);
+      console.error(`[INFO] 内容长度: ${result.metadata.contentLength} 字符`);
+      console.error(`[INFO] 图片数量: ${result.metadata.imageCount} 张`);
     }
 
-    // 构建输出
-    let markdown = '';
-
-    if (!NO_METADATA) {
-      markdown += `# ${result.metadata.title}\n\n`;
-      if (result.metadata.author) {
-        markdown += `**作者**: ${result.metadata.author}  \n`;
-      }
-      if (result.metadata.publishTime) {
-        markdown += `**发布时间**: ${result.metadata.publishTime}  \n`;
-      }
-      if (result.metadata.source) {
-        markdown += `**来源**: ${result.metadata.source}  \n`;
-      }
-      markdown += '\n---\n\n';
-    }
-
-    markdown += result.markdown;
-
-    if (result.images.length > 0 && !NO_METADATA) {
-      markdown += '\n---\n\n## 图片列表\n\n';
-      for (const img of result.images) {
-        markdown += `- ![${img.alt || ''}](${img.src})\n`;
-      }
-    }
-
-    // 输出结果
     if (OUTPUT) {
-      const { writeFileSync } = await import('node:fs');
-      writeFileSync(OUTPUT, markdown, 'utf-8');
+      writeFileSync(OUTPUT, result.markdown, 'utf-8');
       console.error(`✅ 已保存到 ${OUTPUT}`);
     } else {
-      console.log(markdown);
+      console.log(result.markdown);
     }
 
-    // JSON 结果（仅 stderr，用于脚本调用）
     if (VERBOSE) {
       console.error(JSON.stringify({
         success: true,
-        method: result.method,
         metadata: result.metadata,
-        contentLength: result.contentLength,
-        imageCount: result.images.length,
         elapsed: `${elapsed}s`,
       }, null, 2));
     }
 
   } catch (err) {
-    console.error(`❌ 提取失败: ${err.message}`);
+    console.error(`❌ 转换失败: ${err.message}`);
     if (VERBOSE) {
       console.error(err.stack);
     }

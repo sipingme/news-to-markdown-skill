@@ -1,8 +1,7 @@
 {
   "name": "news-to-markdown-skill",
-  "version": "1.3.2",
-  "description": "新闻文章转 Markdown，支持三层抓取策略和智能内容提取",
-  "main": "src/index.js",
+  "version": "2.0.0",
+  "description": "ClawHub skill for converting news to markdown (powered by @siping/news-to-markdown)",
   "bin": {
     "convert-url": "./bin/convert-url"
   },
@@ -12,16 +11,14 @@
   "keywords": [
     "news",
     "markdown",
-    "extractor",
-    "web-scraping"
+    "converter",
+    "clawhub",
+    "skill"
   ],
   "author": "Ping Si <sipingme@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@siping/html-to-markdown-node": "^1.0.1",
-    "cheerio": "^1.0.0",
-    "news-extractor-node": "^0.1.0",
-    "playwright": "^1.40.0"
+    "@siping/news-to-markdown": "file:../news-to-markdown"
   },
   "engines": {
     "node": ">=18.0.0"

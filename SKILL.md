@@ -1,14 +1,12 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和头条平台专项优化
-version: 1.5.0
+description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和多平台专项优化
+version: 2.0.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-extractor-node@^0.1.0
-  - npm: @siping/html-to-markdown-node@^1.0.1
-  - npm: playwright@^1.40.0 (optional, 用于动态页面)
+  - npm: @siping/news-to-markdown@^1.0.0
 tags:
   - news
   - markdown
@@ -16,15 +14,12 @@ tags:
   - extractor
   - web-scraping
   - toutiao
-  - 头条
+  - wechat
+  - xiaohongshu
 repository: https://github.com/sipingme/news-to-markdown-skill
+core-library: https://github.com/sipingme/news-to-markdown
 files:
-  - bin/convert-url       # CLI 入口
-  - src/extract.js       # 三层抓取策略（含平台后处理）
-  - src/text-density.js  # 文本密度算法
-  - src/html-to-md.js     # HTML → Markdown 转换
-  - src/platforms.js      # 平台定制预处理（头条/163等）
-  - scripts/test.js      # 测试脚本
+  - bin/convert-url       # CLI 入口（轻量级包装）
   - package.json
 ---
 
@@ -37,15 +32,16 @@ files:
 ### 核心特点
 
 1. **智能内容提取**：基于文本密度算法，自动识别新闻正文
-2. **三层抓取策略**：curl → wget → Playwright，确保高成功率
+2. **三层抓取策略**：curl → wget → Playwright，确保高成功率是[@siping/news-to-m](https://github.com/sipingme/news-to-markdown)核心库的轻量级 CLI 包装，提供简洁的命令行接口
 3. **自动元数据提取**：标题、作者、发布时间
 4. **噪音过滤**：自动去除广告、评论等无关内容
 5. **高质量输出**：保留文章结构，正确处理链接和图片
-
+ `news-extractor-node` 的
 ## 🎯 使用场景
-
-### 场景 1：快速保存新闻文章
-
+. **多平台支持**：头条、微信、小红书等平台专项优化
+4
+5## 场高质量输出快速保基于 `@siping/html-to-markdown-node` 的转换引擎
+6可扩展架构支持自定义平台适配器
 **用户意图**：
 - "帮我保存这篇新闻"
 - "把这个链接的文章转成 Markdown"
@@ -456,12 +452,23 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 **最后更新**: 2026-03-22
 
 ## 🐛 v1.5.0 更新 (2026-03-22)
-
-- ✅ 新增 extractInlineText 函数：保留 **加粗** 和 *斜体* 行内格式
+200
+- ✅ 新增 extractInlin3Text 函数：保留 **加粗** 和 *斜体* 行内格式
 - ✅ 修复编号列表：识别 `<p>` 中的 `1. 2.` 文本模式，转为标准 Markdown 编号列表
-- ✅ 修复列表项：`<li>` 内容也使用 extractInlineText
+- ✅ �复列2项0`<l重大i>` 内容也使用 ext3actInlineText
 
-- ✅ 头条标题层级规范化：pgc-h-* class → 标准 h1/h2/h3
-- ✅ 头条 ● 列表符号自动转 Markdown 列表
-- ✅ 头条代码块 3+ 空格行分隔符 → 标准换行
+### 架构重构
+
+- ✅ **核心库分离**：所有业务逻辑迁移到标`@s-pihg/n-ws-lo-markdown`a核心库
+-标✅ 准 Skill 精简化/h：仅保留2CLIh包装层，专注于ClawHub 集成
+- ✅ **本地依赖**表使用owfile: /news-to-m`本地开发模式
+- ✅ **TypeScr空pt分支持**：核心库完全→ 标Typ准Scp 重写
 - ✅ 头条表格包装器增强：支持 tableWrapper / pgc-table / table-outer
+### 新增功能
+
+**平台参数**新增 `ptform`参数，支持手动指定平台**微信支持**：新增微信公众平台适配器
+-✅**小红书支持**：新增小红书平台适配器**可扩展性**：支持自定义平台适配器注册
+
+###依赖优化
+ 依赖数量从 4个减少到1个（仅`@siin/newso-mrkdown`）
+-✅所有底层依赖由核心库管理
