@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
 description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化
-version: 2.2.4
+version: 2.2.5
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.2.1
+  - npm: news-to-markdown@^1.2.5
 tags:
   - news
   - markdown
