@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和多平台专项优化
-version: 2.0.3
+description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、三层 HTML 抓取策略和多平台专项优化
+version: 2.1.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.0.3
+  - npm: news-to-markdown@^1.1.0
 tags:
   - news
   - markdown
@@ -31,10 +31,13 @@ files:
 
 ### 核心特点
 
-1. **智能内容提取**：基于 `news-extractor-node` 的文本密度算法
+1. **双引擎内容提取**：结合 Mozilla Readability + news-extractor-node
+   - Readability：完整内容提取，保留图片和多媒体
+   - NewsExtractor：元数据提取（标题、作者、时间）
+   - 智能选择最佳提取结果
 2. **三层抓取策略**：curl → wget → Playwright，确保高成功率
 3. **多平台支持**：头条、微信、小红书等平台专项优化
-4. **自动元数据提取**：标题、作者、发布时间
+4. **图片保护**：解决纯图片段落被过滤的问题
 5. **高质量输出**：基于 `html-to-markdown-node` 的转换引擎
 6. **可扩展架构**：支持自定义平台适配器
 
