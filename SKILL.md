@@ -6,7 +6,7 @@ author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.2.5
+  - npm: news-to-markdown@^1.2.6
 tags:
   - news
   - markdown
