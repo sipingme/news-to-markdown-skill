@@ -1,7 +1,7 @@
 ---
 name: news-to-markdown
 description: 一键将新闻文章转换为 Markdown，支持智能内容提取、三层 HTML 抓取策略和多平台专项优化
-version: 2.0.1
+version: 2.0.3
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
