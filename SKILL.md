@@ -1,6 +1,6 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化
+description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
 version: 2.3.4
 author: Ping Si <sipingme@gmail.com>
 type: command
@@ -15,7 +15,10 @@ tags:
   - web-scraping
   - toutiao
   - wechat
-  - xiaohongshu
+  - bilibili
+  - csdn
+  - cnblogs
+  - segmentfault
 repository: https://github.com/sipingme/news-to-markdown-skill
 core-library: https://github.com/sipingme/news-to-markdown
 files:
@@ -40,7 +43,17 @@ files:
    - 智能降级到第一张有效图片
    - 完美配合 wechat-md-publisher 等发布工具
 3. **三层抓取策略**：curl → wget → Playwright，确保高成功率
-4. **多平台支持**：头条、微信、小红书等平台专项优化
+4. **多平台支持**：新增10个平台专项优化
+   - ✅ 头条（移动端 + PC 端）
+   - ✅ 微信公众号
+   - ✅ 掘金
+   - ✅ 简书
+   - ✅ CSDN
+   - ✅ 人人都是产品经理
+   - ✅ 开源中国
+   - ✅ B站专栏
+   - ✅ SegmentFault
+   - ✅ 博客园
 5. **图片保护**：解决纯图片段落被过滤的问题
 6. **高质量输出**：基于 `html-to-markdown-node` 的转换引擎
 7. **可扩展架构**：支持自定义平台适配器
