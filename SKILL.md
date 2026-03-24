@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、三层 HTML 抓取策略和多平台专项优化
-version: 2.1.0
+description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化
+version: 2.2.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.1.0
+  - npm: news-to-markdown@^1.2.0
 tags:
   - news
   - markdown
@@ -35,11 +35,15 @@ files:
    - Readability：完整内容提取，保留图片和多媒体
    - NewsExtractor：元数据提取（标题、作者、时间）
    - 智能选择最佳提取结果
-2. **三层抓取策略**：curl → wget → Playwright，确保高成功率
-3. **多平台支持**：头条、微信、小红书等平台专项优化
-4. **图片保护**：解决纯图片段落被过滤的问题
-5. **高质量输出**：基于 `html-to-markdown-node` 的转换引擎
-6. **可扩展架构**：支持自定义平台适配器
+2. **智能封面图选择**：自动提取最佳封面图
+   - 优先使用 og:image / twitter:image meta 标签
+   - 智能降级到第一张有效图片
+   - 完美配合 wechat-md-publisher 等发布工具
+3. **三层抓取策略**：curl → wget → Playwright，确保高成功率
+4. **多平台支持**：头条、微信、小红书等平台专项优化
+5. **图片保护**：解决纯图片段落被过滤的问题
+6. **高质量输出**：基于 `html-to-markdown-node` 的转换引擎
+7. **可扩展架构**：支持自定义平台适配器
 
 这是 [news-to-markdown](https://github.com/sipingme/news-to-markdown) 核心库的轻量级 CLI 包装。
 
