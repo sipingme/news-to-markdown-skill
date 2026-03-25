@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
 description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
-version: 2.3.8
+version: 2.3.9
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.3.8
+  - npm: news-to-markdown@^1.3.9
 tags:
   - news
   - markdown
@@ -470,12 +470,28 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 
 ---
 
-**版本**: 2.3.4  
-**最后更新**: 2026-03-24
+**版本**: 2.3.9  
+**最后更新**: 2026-03-25
 
-## � v1.3.4 更新 (2026-03-24)
+## 📝 更新日志
 
-### 新增平台支持（共10个）
+### v2.3.9 (2026-03-25)
+
+#### 修复
+
+- ✅ **封面图重复问题修复**：
+  - 修复封面图在正文开头重复出现的问题
+  - 自动检测并移除与 frontmatter cover 相同的正文开头图片
+  - 比较图片 URL 时忽略查询参数差异
+  - 确保推送到微信公众号时不会出现重复图片
+
+#### 依赖更新
+
+- ✅ 升级 `news-to-markdown` 到 v1.3.9
+
+### v2.3.8 (2026-03-24)
+
+#### 新增平台支持（共10个）
 
 - ✅ **头条**（移动端 + PC 端）- v1.2.6
 - ✅ **微信公众号** - v1.2.6
@@ -488,24 +504,14 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 - ✅ **SegmentFault** - v1.3.3
 - ✅ **博客园** - v1.3.4
 
-### 架构优化
+#### 架构优化
 
 - ✅ **核心库分离**：所有业务逻辑迁移到 `news-to-markdown` 核心库
 - ✅ **Skill 精简化**：仅保留 CLI 包装层，专注于 ClawHub 集成
 - ✅ **TypeScript 支持**：核心库完全用 TypeScript 重写
 - ✅ **平台注册系统**：支持自定义平台适配器注册
 
-### 依赖优化
+#### 依赖优化
 
 - ✅ 依赖数量从 4 个减少到 1 个（仅 `news-to-markdown`）
-- ✅ 所有底层依赖由核心库管理用owfile: /news-to-m`本地开发模式
-- ✅ **TypeScr空pt分支持**：核心库完全→ 标Typ准Scp 重写
-- ✅ 头条表格包装器增强：支持 tableWrapper / pgc-table / table-outer
-### 新增功能
-
-**平台参数**新增 `ptform`参数，支持手动指定平台**微信支持**：新增微信公众平台适配器
--✅**小红书支持**：新增小红书平台适配器**可扩展性**：支持自定义平台适配器注册
-
-###依赖优化
- 依赖数量从 4个减少到1个（仅`@siin/newso-mrkdown`）
--✅所有底层依赖由核心库管理
+- ✅ 所有底层依赖由核心库管理
