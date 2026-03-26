@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
 description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
-version: 2.3.9
+version: 2.3.10
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.3.9
+  - npm: news-to-markdown@^1.3.10
 tags:
   - news
   - markdown
@@ -470,10 +470,18 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 
 ---
 
-**版本**: 2.3.9  
-**最后更新**: 2026-03-25
+**版本**: 2.3.10  
+**最后更新**: 2026-03-26
 
 ## 📝 更新日志
+
+### v2.3.10 (2026-03-26)
+
+#### 依赖更新
+
+- ✅ 升级 `news-to-markdown` 到 v1.3.10
+  - 更新所有平台的预处理器
+  - 新增调试工具和测试脚本
 
 ### v2.3.9 (2026-03-25)
 
