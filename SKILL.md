@@ -1,12 +1,12 @@
 ---
 name: news-to-markdown
-description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
-version: 2.3.11
+description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、图片下载到本地、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
+version: 1.4.0
 author: Ping Si <sipingme@gmail.com>
 type: command
 requires:
   - node: ">=18.0.0"
-  - npm: news-to-markdown@^1.3.11
+  - npm: news-to-markdown@^1.4.0
 tags:
   - news
   - markdown
@@ -38,11 +38,17 @@ files:
    - Readability：完整内容提取，保留图片和多媒体
    - NewsExtractor：元数据提取（标题、作者、时间）
    - 智能选择最佳提取结果
-2. **智能封面图选择**：自动提取最佳封面图
+2. **图片下载到本地** ⭐ NEW in v1.4.0
+   - 自动下载远程图片到本地目录
+   - 避免远程 URL 签名过期（如头条图片）
+   - 避免防盗链问题
+   - Markdown 使用相对路径引用本地图片
+   - 完美配合 wechat-md-publisher 发布工具
+3. **智能封面图选择**：自动提取最佳封面图
    - 优先使用 og:image / twitter:image meta 标签
    - 智能降级到第一张有效图片
-   - 完美配合 wechat-md-publisher 等发布工具
-3. **三层抓取策略**：curl → wget → Playwright，确保高成功率
+   - 支持下载到本地或保留远程 URL
+4. **三层抓取策略**：curl → wget → Playwright，确保高成功率
 4. **多平台支持**：新增10个平台专项优化
    - ✅ 头条
    - ✅ 微信公众号
@@ -62,16 +68,33 @@ files:
 
 ## 🎯 使用场景
 
-### 场景 1：快速保存新闻文章
+### 场景 1：基础转换（推荐：下载图片到本地）⭐
 
 **用户意图**：
-- "帮我保存这篇新闻"
-- "把这个链接的文章转成 Markdown"
-- "下载这篇文章"
+- "把这个头条文章转成 Markdown"
+- "提取这篇文章，图片也要保存"
 
 **AI 调用**：
 ```bash
-convert-url --url "https://example.com/news/article" \
+convert-url --url "https://www.toutiao.com/article/123" \
+            --download-images \
+            --output-dir ./article
+```
+
+**为什么推荐下载图片？**
+- 头条图片 URL 包含签名和过期时间，几小时后会失效
+- 本地图片更可靠，不受网络波动影响
+- 完美配合 wechat-md-publisher 发布到微信公众号
+
+### 场景 2：快速转换（不下载图片）
+
+**用户意图**：
+- "快速看一下这篇文章内容"
+- "只要文字，不需要图片"
+
+**AI 调用**：
+```bash
+convert-url --url "https://www.toutiao.com/article/123" \
             --output "article.md"
 ```
 
@@ -130,6 +153,8 @@ convert-url --url "https://example.com/news" \
 |------|------|------|------|------|
 | `--url` | string | ✅ | 新闻文章的 URL | `https://example.com/news` |
 | `--output` | string | ❌ | 输出文件路径 | `article.md` |
+| `--download-images` | flag | ❌ | 下载图片到本地 ⭐ NEW | - |
+| `--output-dir` | string | ❌ | 输出目录（用于图片下载） | `./output` |
 | `--selector` | string | ❌ | CSS 选择器，指定提取区域 | `article.content` |
 | `--noise` | string | ❌ | 要移除的元素（逗号分隔） | `.ad,.sidebar,.comments` |
 | `--no-metadata` | flag | ❌ | 不包含元数据（标题、作者、时间） | - |
