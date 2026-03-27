@@ -5,7 +5,7 @@
     "convert-url": "./bin/convert-url"
   },
   "dependencies": {
-    "news-to-markdown": "^1.4.0"
+    "news-to-markdown": "^1.4.3"
   },
   "engines": {
     "node": ">=18.0.0"
