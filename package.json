@@ -1,11 +1,11 @@
 {
   "name": "news-to-markdown-skill",
-  "version": "2.3.13",
+  "version": "2.3.14",
   "bin": {
     "convert-url": "./bin/convert-url"
   },
   "dependencies": {
-    "news-to-markdown": "^1.4.12"
+    "news-to-markdown": "^1.4.15"
   },
   "engines": {
     "node": ">=18.0.0"
