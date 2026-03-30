@@ -1,12 +1,17 @@
 ---
 name: news-to-markdown-skill
 description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、图片下载到本地、三层 HTML 抓取策略和多平台专项优化。新增10个平台支持：头条、微信公众号、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园
-version: 1.4.18
+version: 2.3.18
 author: Ping Si <sipingme@gmail.com>
 type: command
+homepage: https://github.com/sipingme/news-to-markdown-skill
 requires:
   - node: ">=18.0.0"
   - npm: news-to-markdown@^1.4.18
+  - system:
+      - curl: "可选，用于快速抓取静态页面"
+      - wget: "可选，curl 失败时的备选"
+      - playwright: "可选，用于动态页面渲染（需运行 npx playwright install chromium）"
 tags:
   - news
   - markdown
@@ -23,7 +28,9 @@ repository: https://github.com/sipingme/news-to-markdown-skill
 core-library: https://github.com/sipingme/news-to-markdown
 files:
   - bin/convert-url       # CLI 入口（轻量级包装）
-  - package.json
+  - package.json          # 依赖声明
+  - SKILL.md              # 技能文档
+  - README.md             # 项目说明
 ---
 
 # news-to-markdown Skill
@@ -511,10 +518,26 @@ bash scripts/convert.sh --url "https://tech.qq.com/..."
 
 ---
 
-**版本**: 2.3.16  
-**最后更新**: 2026-03-29
+**版本**: 2.3.18  
+**最后更新**: 2026-03-30
 
 ## 📝 更新日志
+
+### v2.3.18 (2026-03-30)
+
+#### 修复
+
+- ✅ 修复版本号不一致问题（package.json, _meta.json, SKILL.md 统一）
+- ✅ 添加运行时依赖声明（curl/wget/Playwright）
+- ✅ 添加 homepage 元数据
+- ✅ 完善 files 列表声明
+
+### v2.3.17 (2026-03-30)
+
+#### 新增
+
+- ✅ 添加 `--download-images` 参数支持
+- ✅ 添加 `--output-dir` 参数支持
 
 ### v2.3.16 (2026-03-29)
 
