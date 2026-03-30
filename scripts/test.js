@@ -2,10 +2,10 @@
 /**
  * test.js — 新闻转 Markdown 测试脚本
  * 
- * 测试常用新闻网站，验证三层抓取策略和内容提取效果
+ * 测试 news-to-markdown 核心库的转换功能
  */
 
-import { extractFromUrl } from '../src/extract.js';
+const { NewsToMarkdownConverter } = require('news-to-markdown');
 
 const TEST_URLS = [
   {
@@ -28,6 +28,8 @@ const TEST_URLS = [
 async function test() {
   console.log('🧪 news-to-markdown 测试\n');
 
+  const converter = new NewsToMarkdownConverter();
+
   for (const testCase of TEST_URLS) {
     console.log(`📰 ${testCase.name}`);
     console.log(`   URL: ${testCase.url}`);
@@ -36,17 +38,18 @@ async function test() {
     const startTime = Date.now();
 
     try {
-      const result = await extractFromUrl(testCase.url, {
+      const result = await converter.convert({
+        url: testCase.url,
         verbose: false,
       });
 
       const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
 
       console.log(`   ✅ 成功 (${elapsed}s)`);
-      console.log(`   方式: ${result.method}`);
+      console.log(`   抓取方式: ${result.metadata.fetchMethod}`);
       console.log(`   标题: ${result.metadata.title || '(无)'}`);
-      console.log(`   长度: ${result.contentLength} 字符`);
-      console.log(`   图片: ${result.images.length} 张`);
+      console.log(`   长度: ${result.metadata.contentLength} 字符`);
+      console.log(`   图片: ${result.metadata.imageCount} 张`);
     } catch (e) {
       console.log(`   ❌ 失败: ${e.message}`);
     }
