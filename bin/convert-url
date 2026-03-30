@@ -11,6 +11,8 @@ const { values, positionals } = parseArgs({
   options: {
     url: { type: 'string', short: 'u' },
     output: { type: 'string', short: 'o' },
+    'output-dir': { type: 'string', short: 'd' },
+    'download-images': { type: 'boolean', default: false },
     selector: { type: 'string', short: 's' },
     noise: { type: 'string', short: 'n' },
     platform: { type: 'string', short: 'p' },
@@ -23,6 +25,8 @@ const { values, positionals } = parseArgs({
 
 const ARTICLE_URL = values.url || positionals[0];
 const OUTPUT = values.output;
+const OUTPUT_DIR = values['output-dir'];
+const DOWNLOAD_IMAGES = values['download-images'];
 const SELECTOR = values.selector;
 const PLATFORM = values.platform;
 const NOISE_SELECTORS = values.noise ? values.noise.split(',').map(s => s.trim()) : undefined;
@@ -39,6 +43,8 @@ ClawHub skill for converting news to markdown
 选项:
   --url, -u <URL>        新闻文章的 URL（必需）
   --output, -o <文件>    输出 Markdown 文件路径（默认: stdout）
+  --output-dir, -d <目录> 输出目录（用于图片下载）
+  --download-images      下载图片到本地（推荐）
   --platform, -p <平台>  指定平台 (toutiao, wechat, xiaohongshu)
   --selector, -s <选择器> CSS 选择器，指定内容区域
   --noise, -n <选择器>   要移除的元素（逗号分隔）
@@ -48,6 +54,7 @@ ClawHub skill for converting news to markdown
 
 示例:
   convert-url --url "https://www.toutiao.com/article/123" --output article.md
+  convert-url --url "https://www.toutiao.com/article/123" --download-images --output-dir ./article
   convert-url "https://mp.weixin.qq.com/s/xxx" --platform wechat
   convert-url --url "https://example.com/news" --no-metadata --verbose
 `);
@@ -73,6 +80,8 @@ async function main() {
       noiseSelectors: NOISE_SELECTORS,
       includeMetadata: !NO_METADATA,
       verbose: VERBOSE,
+      downloadImages: DOWNLOAD_IMAGES,
+      outputDir: OUTPUT_DIR,
     });
 
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
