@@ -12,7 +12,8 @@ const { values, positionals } = parseArgs({
     url: { type: 'string', short: 'u' },
     output: { type: 'string', short: 'o' },
     'output-dir': { type: 'string', short: 'd' },
-    'download-images': { type: 'boolean', default: false },
+    'download-images': { type: 'boolean', default: true },
+    'no-download-images': { type: 'boolean', default: false },
     selector: { type: 'string', short: 's' },
     noise: { type: 'string', short: 'n' },
     platform: { type: 'string', short: 'p' },
@@ -26,7 +27,7 @@ const { values, positionals } = parseArgs({
 const ARTICLE_URL = values.url || positionals[0];
 const OUTPUT = values.output;
 const OUTPUT_DIR = values['output-dir'];
-const DOWNLOAD_IMAGES = values['download-images'];
+const DOWNLOAD_IMAGES = values['no-download-images'] ? false : values['download-images'];
 const SELECTOR = values.selector;
 const PLATFORM = values.platform;
 const NOISE_SELECTORS = values.noise ? values.noise.split(',').map(s => s.trim()) : undefined;
@@ -44,7 +45,8 @@ ClawHub skill for converting news to markdown
   --url, -u <URL>        新闻文章的 URL（必需）
   --output, -o <文件>    输出 Markdown 文件路径（默认: stdout）
   --output-dir, -d <目录> 输出目录（用于图片下载）
-  --download-images      下载图片到本地（推荐）
+  --download-images      下载图片到本地（默认开启）
+  --no-download-images   不下载图片
   --platform, -p <平台>  指定平台 (toutiao, wechat, xiaohongshu)
   --selector, -s <选择器> CSS 选择器，指定内容区域
   --noise, -n <选择器>   要移除的元素（逗号分隔）
