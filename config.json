@@ -15,8 +15,8 @@
       "description": "将新闻文章转换为 Markdown"
     },
     "help": {
-      "script": "./scripts/run.js",
-      "args": ["help"],
+      "script": "./scripts/postinstall.js",
+      "args": [],
       "description": "显示使用帮助"
     }
   },
