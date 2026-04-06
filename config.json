@@ -1,12 +1,12 @@
 {
   "name": "news-to-markdown",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "requiredEnvVars": [],
   "skill": {
     "name": "news-to-markdown",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "enabled": true,
-    "autoInvoke": true
+    "autoInvoke": false
   },
   "commands": {
     "convert": {
@@ -58,15 +58,21 @@
   },
   "permissions": {
     "filesystem": {
-      "read": ["*"],
+      "read": ["*.html", "*.htm", "*.md", "./images/", "./output/"],
       "write": ["*.md", "./images/"]
     },
     "network": {
       "domains": [
         "registry.npmjs.org",
-        "*"
+        "*.toutiao.com",
+        "*.toutiaoimg.com",
+        "*.weixin.qq.com",
+        "*.xiaohongshu.com",
+        "*.xhscdn.com",
+        "*.36kr.com",
+        "*.zhihu.com"
       ],
-      "note": "需要访问目标新闻网站抓取内容"
+      "note": "仅访问支持的新闻平台域名"
     }
   }
 }
