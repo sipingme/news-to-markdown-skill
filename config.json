@@ -1,10 +1,10 @@
 {
   "name": "news-to-markdown",
-  "version": "2.3.30",
+  "version": "2.3.31",
   "requiredEnvVars": [],
   "skill": {
     "name": "news-to-markdown",
-    "version": "2.3.30",
+    "version": "2.3.31",
     "enabled": true,
     "autoInvoke": true
   },
