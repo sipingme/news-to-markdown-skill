@@ -1,0 +1,72 @@
+{
+  "name": "news-to-markdown",
+  "version": "2.3.30",
+  "requiredEnvVars": [],
+  "skill": {
+    "name": "news-to-markdown",
+    "version": "2.3.30",
+    "enabled": true,
+    "autoInvoke": true
+  },
+  "commands": {
+    "convert": {
+      "script": "./scripts/run.js",
+      "args": ["convert"],
+      "description": "将新闻文章转换为 Markdown"
+    },
+    "help": {
+      "script": "./scripts/run.js",
+      "args": ["help"],
+      "description": "显示使用帮助"
+    }
+  },
+  "environment": {
+    "required": [
+      "NODE_VERSION>=18.0.0"
+    ],
+    "optional": []
+  },
+  "install": {
+    "type": "npx",
+    "package": "news-to-markdown",
+    "version": "^1.4.29",
+    "execution": "npx --yes news-to-markdown@^1.4.29",
+    "global": false,
+    "autoInstall": false,
+    "autoUpdate": false,
+    "riskLevel": "moderate",
+    "riskReason": "通过 npx 动态拉取并执行第三方 npm 包，存在供应链风险。使用前请审计源码。",
+    "requiresApproval": true,
+    "source": {
+      "type": "npm",
+      "registry": "https://registry.npmjs.org",
+      "package": "news-to-markdown",
+      "repository": "https://github.com/sipingme/news-to-markdown",
+      "license": "MIT",
+      "audit": "https://github.com/sipingme/news-to-markdown/blob/main/src/index.ts"
+    },
+    "verification": {
+      "command": "npx --yes news-to-markdown@^1.4.29 --version",
+      "expectedOutput": "1.4"
+    }
+  },
+  "dependencies": {
+    "npm": [
+      "news-to-markdown@^1.4.29"
+    ],
+    "note": "Package is executed via npx at runtime, no global installation required"
+  },
+  "permissions": {
+    "filesystem": {
+      "read": ["*"],
+      "write": ["*.md", "./images/"]
+    },
+    "network": {
+      "domains": [
+        "registry.npmjs.org",
+        "*"
+      ],
+      "note": "需要访问目标新闻网站抓取内容"
+    }
+  }
+}
