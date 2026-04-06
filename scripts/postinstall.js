@@ -29,19 +29,19 @@ ${BOLD}🌐 支持的平台（13个）：${RESET}
 ${BOLD}🚀 快速开始：${RESET}
 
    ${YELLOW}# 基础转换（推荐：下载图片到本地）${RESET}
-   npx --yes news-to-markdown@^1.4.29 \\
+   npx --yes news-to-markdown@^3.0.0 \\
      --url "https://www.toutiao.com/article/123" \\
      --download-images \\
      --output-dir ./article
 
    ${YELLOW}# 快速转换（不下载图片）${RESET}
-   npx --yes news-to-markdown@^1.4.29 \\
+   npx --yes news-to-markdown@^3.0.0 \\
      --url "https://36kr.com/p/123" \\
      --no-download-images \\
      --output article.md
 
    ${YELLOW}# 自定义提取${RESET}
-   npx --yes news-to-markdown@^1.4.29 \\
+   npx --yes news-to-markdown@^3.0.0 \\
      --url "https://example.com/news" \\
      --noise ".sidebar,.comments,.ads" \\
      --no-metadata
@@ -58,6 +58,6 @@ ${BOLD}⚙️  常用参数：${RESET}
    ${CYAN}--verbose, -v${RESET}        显示详细日志
 
 ${BOLD}📖 更多信息：${RESET}
-   npx --yes news-to-markdown@^1.4.29 --help
+   npx --yes news-to-markdown@^3.0.0 --help
    https://github.com/sipingme/news-to-markdown
 `);

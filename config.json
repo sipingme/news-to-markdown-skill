@@ -1,10 +1,10 @@
 {
   "name": "news-to-markdown",
-  "version": "2.3.31",
+  "version": "3.0.0",
   "requiredEnvVars": [],
   "skill": {
     "name": "news-to-markdown",
-    "version": "2.3.31",
+    "version": "3.0.0",
     "enabled": true,
     "autoInvoke": true
   },
@@ -29,8 +29,8 @@
   "install": {
     "type": "npx",
     "package": "news-to-markdown",
-    "version": "^1.4.29",
-    "execution": "npx --yes news-to-markdown@^1.4.29",
+    "version": "^3.0.0",
+    "execution": "npx --yes news-to-markdown@^3.0.0",
     "global": false,
     "autoInstall": false,
     "autoUpdate": false,
@@ -46,13 +46,13 @@
       "audit": "https://github.com/sipingme/news-to-markdown/blob/main/src/index.ts"
     },
     "verification": {
-      "command": "npx --yes news-to-markdown@^1.4.29 --version",
-      "expectedOutput": "1.4"
+      "command": "npx --yes news-to-markdown@^3.0.0 --version",
+      "expectedOutput": "3.0"
     }
   },
   "dependencies": {
     "npm": [
-      "news-to-markdown@^1.4.29"
+      "news-to-markdown@^3.0.0"
     ],
     "note": "Package is executed via npx at runtime, no global installation required"
   },
