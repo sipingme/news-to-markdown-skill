@@ -3,7 +3,7 @@
 const { spawnSync } = require('node:child_process');
 
 // 所需版本（与 config.json 中 dependencies.npm 保持一致）
-const REQUIRED_VERSION = '3.1.2';
+const REQUIRED_VERSION = '3.1.3';
 
 const command = process.argv[2];
 const args = process.argv.slice(3);
