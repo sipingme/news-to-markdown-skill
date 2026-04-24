@@ -1,48 +1,76 @@
-# news-to-markdown-skill
+# news-to-markdown Skill
 
-新闻文章转 Markdown，支持三层抓取策略和智能内容提取。
+> 输入文章 URL，输出干净的 Markdown 正文 — 17 个平台专项优化，专为 AI Agent 设计
 
-## 安装
-
-```bash
-# 安装依赖
-npm install
-
-# 可选：安装 Playwright 浏览器（用于动态页面）
-npx playwright install chromium
-```
-
-## 使用
+## 快速开始
 
 ```bash
-# 基本用法
-convert-url --url "https://example.com/news/article" --output article.md
+# 基本转换
+npx --yes news-to-markdown@^3.3.0 --url "https://www.toutiao.com/article/123"
 
-# 只要正文，不要元数据
-convert-url --url "https://example.com/article" --no-metadata
+# 保存到文件
+npx --yes news-to-markdown@^3.3.0 --url "https://mp.weixin.qq.com/s/xxx" --output article.md
 
-# 指定内容区域
-convert-url --url "https://example.com/article" --selector "article.content"
+# 下载图片到本地（生成离线包）
+npx --yes news-to-markdown@^3.3.0 --url "https://36kr.com/p/xxx" \
+  --download-images --output-dir ./article
 
-# 显示详细日志
-convert-url --url "https://example.com/article" -v
+# 与 browser-web-search 配合：搜索 → 提取正文
+bws site toutiao/search "ai agent" --count 3
+npx --yes news-to-markdown@^3.3.0 --url "https://www.toutiao.com/article/111"
 ```
 
-## 三层抓取策略
+## 专项优化平台（17 个）
 
-1. **curl** — 最快（1-3s），用于静态页面
-2. **wget** — 备选（2-4s），更好的兼容性
-3. **Playwright** — 最慢（5-10s），支持 JavaScript 动态渲染
+| 平台 | 域名 |
+|-----|------|
+| **今日头条** | toutiao.com |
+| **微信公众号** | mp.weixin.qq.com |
+| **小红书** | xiaohongshu.com |
+| **知乎** | zhihu.com |
+| **36kr** | 36kr.com |
+| **虎嗅** | huxiu.com |
+| **华尔街见闻** | wallstreetcn.com |
+| **澎湃新闻** | thepaper.cn |
+| **InfoQ** | infoq.cn / infoq.com |
+| **Bilibili 专栏** | bilibili.com |
+| **掘金** | juejin.cn |
+| **CSDN** | csdn.net |
+| **博客园** | cnblogs.com |
+| **简书** | jianshu.com |
+| **SegmentFault** | segmentfault.com |
+| **开源中国** | oschina.net |
+| **人人都是产品经理** | woshipm.com |
 
-## 内容提取
+其余平台走通用算法（Mozilla Readability），大多数文章均可正常提取。
 
-- 基于文本密度算法自动识别新闻正文
-- 自动提取标题、作者、发布时间
-- 自动过滤广告、评论等噪音内容
-- 保留图片链接
+## 参数速查
 
-## 测试
+| 参数 | 说明 |
+|-----|------|
+| `--url` | 文章 URL（必填） |
+| `--output` | 输出文件路径 |
+| `--download-images` | 下载图片到本地 |
+| `--output-dir` | 图片输出目录 |
+| `--no-metadata` | 只要正文，不含标题/作者/时间 |
+| `--selector` | 自定义内容区域 CSS 选择器 |
+| `--noise` | 移除指定元素（逗号分隔） |
+| `--verbose` | 详细日志 |
 
-```bash
-npm test
-```
+## 环境要求
+
+- Node.js >= 18.0.0
+- 可选：`npx playwright install chromium`（动态页面支持）
+
+## 文档
+
+详细使用说明：[SKILL.md](./SKILL.md)
+
+## 链接
+
+- [news-to-markdown GitHub](https://github.com/sipingme/news-to-markdown)
+- [npm 包](https://www.npmjs.com/package/news-to-markdown)
+
+## License
+
+MIT
