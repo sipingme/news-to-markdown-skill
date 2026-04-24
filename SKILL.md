@@ -1,6 +1,6 @@
 ---
 name: news-to-markdown-skill
-description: 一键将新闻文章转换为 Markdown，支持双引擎内容提取、智能封面图选择、图片下载到本地、三层 HTML 抓取策略和多平台专项优化。支持13个平台：头条、微信公众号、36kr、知乎、掘金、简书、CSDN、人人都是产品经理、开源中国、B站专栏、SegmentFault、博客园、小红书
+description: 输入文章 URL，输出干净的 Markdown 正文。支持13个平台（头条、微信公众号、36kr、知乎等），双引擎内容提取、图片下载到本地、三层 HTML 抓取策略。常与 browser-web-search skill 配合：先用 bws 搜索拿到 url 列表，再逐篇调用本 skill 读取正文。
 version: 3.1.3
 author: Ping Si <sipingme@gmail.com>
 user-invocable: true
@@ -92,6 +92,32 @@ files:
 - 支持自定义平台适配器，便于持续扩展
 
 这是 [news-to-markdown](https://github.com/sipingme/news-to-markdown) 核心库的轻量级 CLI 包装。
+
+## 🔗 与 browser-web-search 配合使用
+
+这是最常见的 Agent 编排模式：
+
+```
+browser-web-search  →  搜索，产出 URL 列表
+news-to-markdown    →  读取正文，产出 Markdown
+```
+
+**典型流程**：
+
+```bash
+# Step 1：调用 browser-web-search 搜索
+bws toutiao/search "ai agent" --count 3 --sort time
+# 返回: [{ title, url, snippet }, ...]
+
+# Step 2：对每个 url 调用 news-to-markdown
+npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/111"
+npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/222"
+npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/333"
+```
+
+**适用搜索命令**：`toutiao/search`、`weixin/search`、`36kr/search`、`zhihu/search`、`xiaohongshu/search` 等所有返回 `url` 字段的 bws 命令。
+
+---
 
 ## 🎯 使用场景
 
