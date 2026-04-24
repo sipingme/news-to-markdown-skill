@@ -1,7 +1,7 @@
 ---
 name: news-to-markdown-skill
 description: 输入文章 URL，输出干净的 Markdown 正文。支持13个平台（头条、微信公众号、36kr、知乎等），双引擎内容提取、图片下载到本地、三层 HTML 抓取策略。常与 browser-web-search skill 配合：先用 bws 搜索拿到 url 列表，再逐篇调用本 skill 读取正文。
-version: 3.1.3
+version: 3.2.0
 author: Ping Si <sipingme@gmail.com>
 user-invocable: true
 requires:
@@ -13,8 +13,8 @@ requires:
 install:
   type: npx
   package: news-to-markdown
-  version: "^3.1.3"
-  execution: "npx --yes news-to-markdown@^3.1.3"
+  version: "^3.2.0"
+  execution: "npx --yes news-to-markdown@^3.2.0"
   riskLevel: moderate
   riskReason: "通过 npx 动态拉取并执行第三方 npm 包，存在供应链风险。使用前请审计源码。"
   source:
@@ -110,9 +110,9 @@ bws toutiao/search "ai agent" --count 3 --sort time
 # 返回: [{ title, url, snippet }, ...]
 
 # Step 2：对每个 url 调用 news-to-markdown
-npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/111"
-npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/222"
-npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/333"
+npx --yes news-to-markdown@^3.2.0 --url "https://www.toutiao.com/article/111"
+npx --yes news-to-markdown@^3.2.0 --url "https://www.toutiao.com/article/222"
+npx --yes news-to-markdown@^3.2.0 --url "https://www.toutiao.com/article/333"
 ```
 
 **适用搜索命令**：`toutiao/search`、`weixin/search`、`36kr/search`、`zhihu/search`、`xiaohongshu/search` 等所有返回 `url` 字段的 bws 命令。
@@ -135,7 +135,7 @@ npx --yes news-to-markdown@^3.1.3 --url "https://www.toutiao.com/article/333"
 
 **AI 调用**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 \
+npx --yes news-to-markdown@^3.2.0 \
   --url "https://www.toutiao.com/article/123" \
   --download-images \
   --output-dir ./article
@@ -154,7 +154,7 @@ npx --yes news-to-markdown@^3.1.3 \
 
 **AI 调用**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 \
+npx --yes news-to-markdown@^3.2.0 \
   --url "https://www.toutiao.com/article/123" \
   --no-download-images \
   --output "article.md"
@@ -175,7 +175,7 @@ npx --yes news-to-markdown@^3.1.3 \
 ```bash
 # 循环处理多个 URL
 for url in "${urls[@]}"; do
-  npx --yes news-to-markdown@^3.1.3 --url "$url" --output "articles/$(basename $url).md"
+  npx --yes news-to-markdown@^3.2.0 --url "$url" --output "articles/$(basename $url).md"
 done
 ```
 
@@ -198,7 +198,7 @@ done
 
 **AI 调用**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 \
+npx --yes news-to-markdown@^3.2.0 \
   --url "https://example.com/news" \
   --noise ".sidebar,.comments,.ads" \
   --no-metadata
@@ -211,7 +211,7 @@ npx --yes news-to-markdown@^3.1.3 \
 从 URL 提取新闻并转换为 Markdown。
 
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url <URL> [选项]
+npx --yes news-to-markdown@^3.2.0 --url <URL> [选项]
 ```
 
 #### 参数
@@ -404,22 +404,22 @@ npx playwright install chromium
 
 **默认使用**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --output "article.md"
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --output "article.md"
 ```
 
 **用户要求"只要正文"**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --no-metadata
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --no-metadata
 ```
 
 **用户提到"去掉广告/评论"**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --noise ".ad,.comment,.sidebar"
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --noise ".ad,.comment,.sidebar"
 ```
 
 **用户指定"只要某个部分"**：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --selector "article.main-content"
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --selector "article.main-content"
 ```
 
 ### 错误处理
@@ -460,14 +460,14 @@ npx --yes news-to-markdown@^3.1.3 --url "$URL" --selector "article.main-content"
 
 **A**: 使用自定义选择器：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --selector "article.main-content"
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --selector "article.main-content"
 ```
 
 ### Q3: 如何去除特定元素？
 
 **A**: 使用 `--noise` 参数：
 ```bash
-npx --yes news-to-markdown@^3.1.3 --url "$URL" --noise ".ad,.sidebar,.comments"
+npx --yes news-to-markdown@^3.2.0 --url "$URL" --noise ".ad,.sidebar,.comments"
 ```
 
 ### Q4: 支持哪些网站？
@@ -488,7 +488,7 @@ npx --yes news-to-markdown@^3.1.3 --url "$URL" --noise ".ad,.sidebar,.comments"
 ```
 我来帮你保存这篇新闻。
 
-[调用 npx --yes news-to-markdown@^3.1.3 --url "https://example.com/news/ai-breakthrough" --output "ai-breakthrough.md"]
+[调用 npx --yes news-to-markdown@^3.2.0 --url "https://example.com/news/ai-breakthrough" --output "ai-breakthrough.md"]
 
 ✅ 已成功保存到 ai-breakthrough.md
 
@@ -527,7 +527,7 @@ npx --yes news-to-markdown@^3.1.3 --url "$URL" --noise ".ad,.sidebar,.comments"
 ```
 好的，我只提取正文内容。
 
-[调用 npx --yes news-to-markdown@^3.1.3 --url "$URL" --no-metadata]
+[调用 npx --yes news-to-markdown@^3.2.0 --url "$URL" --no-metadata]
 
 ✅ 已保存纯正文内容。
 ```
@@ -543,7 +543,7 @@ npx --yes news-to-markdown@^3.1.3 --url "$URL" --noise ".ad,.sidebar,.comments"
 npm cache clean --force
 
 # 验证版本
-npx --yes news-to-markdown@^3.1.3 --version
+npx --yes news-to-markdown@^3.2.0 --version
 ```
 
 ### 测试
@@ -552,9 +552,9 @@ npx --yes news-to-markdown@^3.1.3 --version
 
 ```bash
 # 测试主流新闻网站
-npx --yes news-to-markdown@^3.1.3 --url "https://news.sina.com.cn/..." --verbose
-npx --yes news-to-markdown@^3.1.3 --url "https://36kr.com/p/..." --verbose
-npx --yes news-to-markdown@^3.1.3 --url "https://mp.weixin.qq.com/s/..." --verbose
+npx --yes news-to-markdown@^3.2.0 --url "https://news.sina.com.cn/..." --verbose
+npx --yes news-to-markdown@^3.2.0 --url "https://36kr.com/p/..." --verbose
+npx --yes news-to-markdown@^3.2.0 --url "https://mp.weixin.qq.com/s/..." --verbose
 ```
 
 ### 日志
@@ -571,7 +571,8 @@ npx --yes news-to-markdown@^3.1.3 --url "https://mp.weixin.qq.com/s/..." --verbo
 
 ---
 
-**版本**: 3.1.3  
+**版本**: 3.2.0  
+**最后更新**: 2026-04-24  
 **最后更新**: 2026-04-08
 
 ## 📝 更新日志
@@ -580,7 +581,7 @@ npx --yes news-to-markdown@^3.1.3 --url "https://mp.weixin.qq.com/s/..." --verbo
 
 #### 重构
 
-- ✅ **改用 npx 动态执行**：移除全局依赖安装，通过 `npx --yes news-to-markdown@^3.1.3` 执行
+- ✅ **改用 npx 动态执行**：移除全局依赖安装，通过 `npx --yes news-to-markdown@^3.2.0` 执行
 - ✅ **添加 config.json**：符合 ClawHub Skill 规范，包含 install 规范和供应链风险声明
 - ✅ **添加 scripts/convert.js**：npx 包装脚本
 - ✅ **更新 SKILL.md**：所有命令示例改为 npx 方式，添加安全风险提示
