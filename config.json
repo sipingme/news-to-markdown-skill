@@ -13,11 +13,6 @@
       "script": "./scripts/run.js",
       "args": ["convert"],
       "description": "将新闻文章转换为 Markdown"
-    },
-    "help": {
-      "script": "./scripts/postinstall.js",
-      "args": [],
-      "description": "显示使用帮助"
     }
   },
   "environment": {
@@ -47,7 +42,7 @@
     },
     "verification": {
       "command": "npx --yes news-to-markdown@^3.3.0 --version",
-      "expectedOutput": "3.2"
+      "expectedOutput": "3.3"
     }
   },
   "dependencies": {
