@@ -3,7 +3,7 @@
 const { spawnSync } = require('node:child_process');
 
 // 所需版本（与 config.json 中 dependencies.npm 保持一致）
-const REQUIRED_VERSION = '3.1.3';
+const REQUIRED_VERSION = '3.3.1';
 
 const command = process.argv[2];
 const args = process.argv.slice(3);
@@ -31,7 +31,7 @@ const runNewsToMarkdown = (cliArgs) => {
 
 function showHelp() {
   console.log(`
-news-to-markdown-skill v2.3.30
+news-to-markdown-skill v3.3.1
 ClawHub skill for converting news to markdown
 
 用法: 

@@ -6,18 +6,18 @@
 
 ```bash
 # 基本转换
-npx --yes news-to-markdown@^3.3.0 --url "https://www.toutiao.com/article/123"
+npx --yes news-to-markdown@^3.3.1 --url "https://www.toutiao.com/article/123"
 
 # 保存到文件
-npx --yes news-to-markdown@^3.3.0 --url "https://mp.weixin.qq.com/s/xxx" --output article.md
+npx --yes news-to-markdown@^3.3.1 --url "https://mp.weixin.qq.com/s/xxx" --output article.md
 
 # 下载图片到本地（生成离线包）
-npx --yes news-to-markdown@^3.3.0 --url "https://36kr.com/p/xxx" \
+npx --yes news-to-markdown@^3.3.1 --url "https://36kr.com/p/xxx" \
   --download-images --output-dir ./article
 
 # 与 browser-web-search 配合：搜索 → 提取正文
 bws site toutiao/search "ai agent" --count 3
-npx --yes news-to-markdown@^3.3.0 --url "https://www.toutiao.com/article/111"
+npx --yes news-to-markdown@^3.3.1 --url "https://www.toutiao.com/article/111"
 ```
 
 ## 专项优化平台（17 个）
